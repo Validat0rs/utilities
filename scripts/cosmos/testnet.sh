@@ -18,7 +18,6 @@ usage() {
   -m      Genesis moniker.
   -b      Binary (e.g.: gaiad).
   -g      Block gas limit (should mirror mainnet).
-  -a      Additional genesis accounts (optional).
 EOF
   exit 1
 }
@@ -33,7 +32,6 @@ setup() {
   MONIKER="${4}"
   BINARY="${5}"
   GAS_LIMIT="${6}"
-  GENESIS_ACCOUNTS="${7}"
 }
 
 #
@@ -58,14 +56,10 @@ add_validator() {
 }
 
 #
-# Add genesis accounts.
+# Add genesis account.
 #
-add_genesis_accounts() {
+add_genesis_account() {
   $BINARY add-genesis-account validator "1000000000$DEFAULT_DENOM" --keyring-backend test
-
-  for i in $(echo "${GENESIS_ACCOUNTS}" | tr ',' '\n'); do
-    $BINARY add-genesis-account "$i" "1000000000$DEFAULT_DENOM"
-  done
 }
 
 #
@@ -116,13 +110,13 @@ run() {
 
   init_chain
   add_validator
-  add_genesis_accounts
+  add_genesis_account
   gentx
   collect_gentx
-  summary
+  display_summary
 }
 
-while getopts ":hr:s:c:m:b:g:a:" opt; do
+while getopts ":hr:s:c:m:b:g:" opt; do
   case "${opt}" in
     h)
       usage
@@ -145,9 +139,6 @@ while getopts ":hr:s:c:m:b:g:a:" opt; do
     g)
       g=${OPTARG:-100000000}
       ;;
-    a)
-      a=${OPTARG}
-      ;;
     *)
       usage
       ;;
@@ -164,4 +155,4 @@ if [ -z "${r}" ] ||
   usage
 fi
 
-run "${r}" "${s}" "${c}" "${m}" "${b}" "${g}" "${a}"
+run "${r}" "${s}" "${c}" "${m}" "${b}" "${g}"
