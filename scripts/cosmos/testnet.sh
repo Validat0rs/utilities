@@ -43,6 +43,8 @@ init_chain() {
   sed -i 's/"time_iota_ms": "1000"/"time_iota_ms": "10"/' "$GENESIS_FILE"
   sed -i 's/"max_gas": "-1"/"max_gas": "'"$GAS_LIMIT"'"/' "$GENESIS_FILE"
   sed -i 's/keyring-backend = "os"/keyring-backend = "test"/' "${ROOT}"/config/client.toml
+  sed -i 's/log_level = "info"/log_level = "error"/' "${ROOT}"/config/config.toml
+  sed -i 's/log_format = "plain"/log_format = "json"/' "${ROOT}"/config/config.toml
 }
 
 #
