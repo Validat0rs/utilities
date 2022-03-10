@@ -20,14 +20,14 @@ make cosmos-testnet
 
 where:
 
-|Param|Description|Required|
-|-----|-----------|--------|
-|`<home>`|The directory for config and data (e.g.: `~/.gaia`)|Yes|
-|`<default_denom>`|The default denomination for the network (e.g.: `uatom`).|Yes|
-|`<chain_id>`|The Chain ID (e.g.: `testnet-1`).|Yes|
-|`<moniker>`|The moniker of the genesis node (e.g.: `node01`).|Yes|
-|`<binary>`|The binary name (e.g.: `gaiad`).|Yes|
-|`<gas_limit>`|The block gas limit (e.g.: `100000000`).|Yes|
+|Param|Description|
+|-----|-----------|
+|`<home>`|The directory for config and data (e.g.: `~/.gaia`)|
+|`<default_denom>`|The default denomination for the network (e.g.: `uatom`).|
+|`<chain_id>`|The Chain ID (e.g.: `testnet-1`).|
+|`<moniker>`|The moniker of the genesis node (e.g.: `node01`).|
+|`<binary>`|The binary name (e.g.: `gaiad`).|
+|`<gas_limit>`|The block gas limit (e.g.: `100000000`).|
 
 e.g.:
 
