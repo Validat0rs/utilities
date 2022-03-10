@@ -12,7 +12,7 @@ usage() {
 
   Options:
   -h      This help output.
-  -o      Home (e.g.: ~/.gaia).
+  -r      The root directory for config and data (e.g.: ~/.gaia).
   -s      Default denom (e.g.: uatom).
   -c      Chain ID.
   -m      Genesis moniker.
@@ -27,13 +27,13 @@ EOF
 # Setup
 #
 setup() {
-  HOME_DIR="${1}"
+  ROOT="${1}"
   DEFAULT_DENOM="${2}"
   CHAIN_ID="${3}"
   MONIKER="${4}"
   BINARY="${5}"
   GAS_LIMIT="${6}"
-  GENESIS_ADDRESSES="${7}"
+  GENESIS_ACCOUNTS="${7}"
 }
 
 #
@@ -44,7 +44,7 @@ init_chain() {
   sed -i "s/\"stake\"/\"$DEFAULT_DENOM\"/" "$GENESIS_FILE"
   sed -i 's/"time_iota_ms": "1000"/"time_iota_ms": "10"/' "$GENESIS_FILE"
   sed -i 's/"max_gas": "-1"/"max_gas": "'"$GAS_LIMIT"'"/' "$GENESIS_FILE"
-  sed -i 's/keyring-backend = "os"/keyring-backend = "test"/' "${HOME_DIR}"/config/client.toml
+  sed -i 's/keyring-backend = "os"/keyring-backend = "test"/' "${ROOT}"/config/client.toml
 }
 
 #
@@ -107,7 +107,7 @@ EOF
 run() {
   setup "$@"
 
-  GENESIS_FILE="${HOME_DIR}"/config/genesis.json
+  GENESIS_FILE="${ROOT}"/config/genesis.json
   if [ -f "$GENESIS_FILE" ]; then
     clear
     printf "\nGenesis already exists!?\n"
@@ -122,13 +122,13 @@ run() {
   summary
 }
 
-while getopts ":ho:s:c:m:b:g:a:" opt; do
+while getopts ":hr:s:c:m:b:g:a:" opt; do
   case "${opt}" in
     h)
       usage
       ;;
-    o)
-      o=${OPTARG:-"~/.gaia"}
+    r)
+      r=${OPTARG:-"~/.gaia"}
       ;;
     s)
       s=${OPTARG:-ustake}
@@ -155,7 +155,7 @@ while getopts ":ho:s:c:m:b:g:a:" opt; do
 done
 shift $((OPTIND-1))
 
-if [ -z "${o}" ] ||
+if [ -z "${r}" ] ||
     [ -z "${s}" ] ||
     [ -z "${c}" ] ||
     [ -z "${m}" ] ||
@@ -164,4 +164,4 @@ if [ -z "${o}" ] ||
   usage
 fi
 
-run "${o}" "${s}" "${c}" "${m}" "${b}" "${g}" "${a}"
+run "${r}" "${s}" "${c}" "${m}" "${b}" "${g}" "${a}"
