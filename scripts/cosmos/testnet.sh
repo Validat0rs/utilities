@@ -59,14 +59,14 @@ add_validator() {
 # Add genesis account.
 #
 add_genesis_account() {
-  $BINARY add-genesis-account validator "1000000000$DEFAULT_DENOM" --keyring-backend test
+  $BINARY add-genesis-account validator "1000000000000$DEFAULT_DENOM" --keyring-backend test
 }
 
 #
 # Genesis Txn.
 #
 gentx() {
-  $BINARY gentx validator "250000000$DEFAULT_DENOM" --chain-id="$CHAIN_ID" --amount="250000000$DEFAULT_DENOM" --keyring-backend test
+  $BINARY gentx validator "25000000000$DEFAULT_DENOM" --chain-id="$CHAIN_ID" --amount="25000000000$DEFAULT_DENOM" --keyring-backend test
 }
 
 #
