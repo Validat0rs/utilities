@@ -15,7 +15,6 @@ CHAIN_ID=<chain_id> \
 MONIKER=<moniker> \
 BINARY=<binary> \
 GAS_LIMIT=<gas_limit> \
-GENESIS_ACCOUNTS=<genesis_accounts> \
 make cosmos-testnet
 ```
 
@@ -29,7 +28,6 @@ where:
 |`<moniker>`|The moniker of the genesis node (e.g.: `node01`).|Yes|
 |`<binary>`|The binary name (e.g.: `gaiad`).|Yes|
 |`<gas_limit>`|The block gas limit (e.g.: `100000000`).|Yes|
-|`<genesis_accounts>`|A comma-seperated list of additional genesis accounts to add.|No|
 
 e.g.:
 
@@ -40,7 +38,6 @@ CHAIN_ID=testnet-1 \
 MONIKER=node01 \
 BINARY=gaiad \
 GAS_LIMIT=100000000 \
-GENESIS_ACCOUNTS=cosmos19skpq685dyedh06ceszah28ch70x94jqrn09ts,cosmos1hwlqf64cxjzh69rdskz2hhwmkhpr4skakjvn4m \
 make cosmos-testnet
 ```
 
