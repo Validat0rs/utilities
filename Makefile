@@ -13,4 +13,4 @@ provider-hetzner-copy:
 	@./scripts/provider/hetzner/copy.sh -u $(USERNAME) -l $(LOCAL_FILE) -r $(REMOTE_FILE)
 
 snapshot-copy:
-	@./scripts/snapshot_copy.sh -r $(ROOT) -b $(BINARY) -t $(TYPE) -a $(BUCKET_NAME) -u $(USERNAME)
+	@./scripts/snapshot_copy.sh -r $(ROOT) -b $(BINARY) -n $(NETWORK) -t $(TYPE) -a $(BUCKET_NAME) -u $(USERNAME)
