@@ -36,7 +36,7 @@ create_backup() {
   ROOT="${1}" \
   BINARY="${2}" \
   TYPE="${3}" \
-  make -C ../ cosmos-snapshot
+  make cosmos-snapshot
 }
 
 #
@@ -46,7 +46,7 @@ copy_s3() {
   BUCKET_NAME="${1}" \
   LOCAL_FILE="${2}" \
   REMOTE_FILE="${3}" \
-  make -C ../ provider-aws-copy
+  make provider-aws-copy
 }
 
 #
@@ -56,14 +56,14 @@ copy_sb() {
   USERNAME="${1}" \
   LOCAL_FILE="${2}" \
   REMOTE_FILE="${3}" \
-  make -C ../ provider-hetzner-copy
+  make provider-hetzner-copy
 }
 
 #
 # Run.
 #
 run() {
-  backup_name "${1}"
+  backup_name "${2}" "${4}"
   create_backup "${1}" "${2}" "${4}"
   copy_s3 "${5}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}/${3}-latest.tar.lz4"
   copy_sb "${6}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}/${BACKUP_NAME}".tar.lz4
