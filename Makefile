@@ -12,5 +12,5 @@ provider-aws-copy:
 provider-hetzner-copy:
 	@./scripts/provider/hetzner/copy.sh -u $(USERNAME) -l $(LOCAL_FILE) -r $(REMOTE_FILE)
 
-snapshot-sync:
-	@./scripts/snapshot_sync.sh -r $(ROOT) -b $(BINARY) -t $(TYPE) -a $(BUCKET_NAME) -u $(USERNAME)
+snapshot-copy:
+	@./scripts/snapshot_copy.sh -r $(ROOT) -b $(BINARY) -t $(TYPE) -a $(BUCKET_NAME) -u $(USERNAME)
