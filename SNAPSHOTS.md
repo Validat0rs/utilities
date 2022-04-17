@@ -13,6 +13,10 @@
 * Have an existing Storage Box on your Hetzner account.
 * Configured your storage box for passwordless [login](https://docs.hetzner.com/robot/storage-box/access/access-ssh-rsync-borg/).
 
+## Assumptions
+
+It's assumed that you're running `cosmovisor` under `systemd`, as a non-privileged user.
+
 ## Generate
 
 To generate a new snapshot, run:
