@@ -69,6 +69,10 @@ run() {
   copy_s3 "${6}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}/${4}/${3}-latest.tar.lz4"
   copy_sb "${7}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}/${4}/${BACKUP_NAME}".tar.lz4
 
+  if [ -n "${COPY_TO_DEFAULT}" ]; then
+    copy_sb "${6}" s3://"${6}"/"${3}/${4}/${BACKUP_NAME}".tar.lz4 "${3}/default/${BACKUP_NAME}".tar.lz4
+  fi
+
   rm "${1}"/backups/"${BACKUP_NAME}".tar.lz4
 }
 
