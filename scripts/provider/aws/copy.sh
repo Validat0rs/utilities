@@ -23,11 +23,6 @@ EOF
 # Run
 #
 run() {
-  if [ ! -f "${2}" ]; then
-    printf "file does not exist!?\n"
-    exit 1
-  fi
-
   printf "copying...\n"
   aws s3 cp "${2}" s3://"${1}"/"${3}" --acl public-read
 }
