@@ -66,13 +66,13 @@ copy_sb() {
 run() {
   backup_name "${2}" "${5}"
   create_backup "${1}" "${2}" "${5}"
-  copy_s3 "${6}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}"/"${4}"/"${3}"-latest.tar.lz4
+  copy_s3 "${6}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}"/"${4}"/"${3}"-"${5}"-latest.tar.lz4
 
   if [ -n "${COPY_TO_DEFAULT}" ]; then
-    copy_s3 "${6}" s3://"${6}"/"${3}"/"${4}"/"${3}"-latest.tar.lz4 "${3}"/default/"${3}"-latest.tar.lz4
+    copy_s3 "${6}" s3://"${6}"/"${3}"/"${4}"/"${3}"-latest.tar.lz4 "${3}"/default/"${3}"-"${5}"-latest.tar.lz4
   fi
 
-  copy_sb "${7}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}"/"${4}"/"${3}"-latest.tar.lz4
+  copy_sb "${7}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}"/"${4}"/"${3}"-"${5}"-latest.tar.lz4
 
   rm "${1}"/backups/"${BACKUP_NAME}".tar.lz4
 }
