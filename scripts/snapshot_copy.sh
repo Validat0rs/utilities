@@ -15,6 +15,7 @@ usage() {
   -r      The root directory for data (e.g.: ~/.gaia).
   -b      Binary (e.g.: gaiad).
   -n      Network (e.g.: cosmoshub).
+  -p      Project.
   -t      Type (e.g.: pruned or archive).
   -a      AWS S3 bucket name.
   -u      Hetzner Storage Box username.
@@ -63,15 +64,15 @@ copy_sb() {
 # Run.
 #
 run() {
-  backup_name "${2}" "${4}"
-  create_backup "${1}" "${2}" "${4}"
-  copy_s3 "${5}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}/${3}-latest.tar.lz4"
-  copy_sb "${6}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}/${BACKUP_NAME}".tar.lz4
+  backup_name "${2}" "${5}"
+  create_backup "${1}" "${2}" "${5}"
+  copy_s3 "${6}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}/${4}/${3}-latest.tar.lz4"
+  copy_sb "${7}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}/${4}/${BACKUP_NAME}".tar.lz4
 
   rm "${1}"/backups/"${BACKUP_NAME}".tar.lz4
 }
 
-while getopts ":hr:b:n:t:a:u:" opt; do
+while getopts ":hr:b:n:p:t:a:u:" opt; do
   case "${opt}" in
     h)
       usage
@@ -84,6 +85,9 @@ while getopts ":hr:b:n:t:a:u:" opt; do
       ;;
     n)
       n=${OPTARG:-"cosmoshub"}
+      ;;
+    p)
+      p=${OPTARG}
       ;;
     t)
       t=${OPTARG:-"default"}
@@ -101,9 +105,10 @@ while getopts ":hr:b:n:t:a:u:" opt; do
 done
 shift $((OPTIND-1))
 
-if [ -z "${a}" ] ||
+if [ -z "${p}" ] ||
+    [ -z "${a}" ] ||
     [ -z "${u}" ]; then
   usage
 fi
 
-run "${r}" "${b}" "${n}" "${t}" "${a}" "${u}"
+run "${r}" "${b}" "${n}" "${p}" "${t}" "${a}" "${u}"
