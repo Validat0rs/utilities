@@ -72,7 +72,7 @@ run() {
     copy_s3 "${6}" s3://"${6}"/"${3}"/"${4}"/"${3}"-latest.tar.lz4 "${3}"/default/"${3}"-latest.tar.lz4
   fi
 
-  copy_sb "${7}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}"/"${4}"/"${BACKUP_NAME}".tar.lz4
+  copy_sb "${7}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}"/"${4}"/"${3}"-latest.tar.lz4
 
   rm "${1}"/backups/"${BACKUP_NAME}".tar.lz4
 }
