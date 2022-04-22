@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Create a snapshot and copy to AWS S3 and Hetzner Storage Box.
+# Create a snapshot and copy to AWS S3.
 #
 
 #
@@ -18,7 +18,6 @@ usage() {
   -p      Project.
   -t      Type (e.g.: pruned or archive).
   -a      AWS S3 bucket name.
-  -u      Hetzner Storage Box username.
 EOF
   exit 1
 }
@@ -51,16 +50,6 @@ copy_s3() {
 }
 
 #
-# Copy to Hetzner Storage Box.
-#
-copy_sb() {
-  USERNAME="${1}" \
-  LOCAL_FILE="${2}" \
-  REMOTE_FILE="${3}" \
-  make provider-hetzner-copy
-}
-
-#
 # Run.
 #
 run() {
@@ -72,12 +61,10 @@ run() {
     copy_s3 "${6}" s3://"${6}"/"${3}"/"${4}"/"${3}"-latest.tar.lz4 "${3}"/default/"${3}"-"${5}"-latest.tar.lz4
   fi
 
-  copy_sb "${7}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}"/"${4}"/"${3}"-"${5}"-latest.tar.lz4
-
   rm "${1}"/backups/"${BACKUP_NAME}".tar.lz4
 }
 
-while getopts ":hr:b:n:p:t:a:u:" opt; do
+while getopts ":hr:b:n:p:t:a:" opt; do
   case "${opt}" in
     h)
       usage
@@ -100,9 +87,6 @@ while getopts ":hr:b:n:p:t:a:u:" opt; do
     a)
       a=${OPTARG}
       ;;
-    u)
-      u=${OPTARG}
-      ;;
     *)
       usage
       ;;
@@ -111,9 +95,8 @@ done
 shift $((OPTIND-1))
 
 if [ -z "${p}" ] ||
-    [ -z "${a}" ] ||
-    [ -z "${u}" ]; then
+    [ -z "${a}" ]; then
   usage
 fi
 
-run "${r}" "${b}" "${n}" "${p}" "${t}" "${a}" "${u}"
+run "${r}" "${b}" "${n}" "${p}" "${t}" "${a}"
