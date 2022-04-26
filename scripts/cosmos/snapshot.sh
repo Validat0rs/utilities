@@ -13,7 +13,7 @@ usage() {
   Options:
   -h      This help output.
   -r      The root directory for data (e.g.: ~/.gaia).
-  -b      Binary (e.g.: gaiad).
+  -b      Binary (e.g.: gaiad).\
   -t      Type (e.g.: pruned or archive).
 EOF
   exit 1
@@ -23,6 +23,7 @@ EOF
 # Stop cosmovisor
 #
 cosmovisor_stop() {
+  HEIGHT=$("${1}" status | jq ".SyncInfo.latest_block_height" | xargs)
   sudo service cosmovisor stop
 }
 
@@ -37,7 +38,7 @@ check_process() {
 # Backup name.
 #
 backup_name() {
-  BACKUP_NAME="${1}"-$(date +%Y-%m-%d)-"${2}"
+  BACKUP_NAME="${1}"_"${HEIGHT}"
 }
 
 #
@@ -62,7 +63,7 @@ cosmovisor_start() {
 #
 run() {
   printf "stopping cosmovisor...\n"
-  cosmovisor_stop
+  cosmovisor_stop "${2}"
   sleep 10
 
   printf "checking that cosmovisor has stopped...\n"

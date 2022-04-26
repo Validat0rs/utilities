@@ -23,13 +23,6 @@ EOF
 }
 
 #
-# Backup name.
-#
-backup_name() {
-  BACKUP_NAME="${1}"-$(date +%Y-%m-%d)-"${2}"
-}
-
-#
 # Create backup.
 #
 create_backup() {
@@ -53,15 +46,19 @@ copy_s3() {
 # Run.
 #
 run() {
-  backup_name "${2}" "${5}"
   create_backup "${1}" "${2}" "${5}"
-  copy_s3 "${6}" "${1}"/backups/"${BACKUP_NAME}".tar.lz4 "${3}"/"${4}"/"${3}"-"${5}"-latest.tar.lz4
 
-  if [ -n "${COPY_TO_DEFAULT}" ]; then
-    copy_s3 "${6}" s3://"${6}"/"${3}"/"${4}"/"${3}"-latest.tar.lz4 "${3}"/default/"${3}"-"${5}"-latest.tar.lz4
-  fi
+  backup_name=$(ls "${1}/backups/*")
+  latest=$(mktemp)
+  cat << EOF > "${latest}"
+${backup_name}
+EOF
 
-  rm "${1}"/backups/"${BACKUP_NAME}".tar.lz4
+  copy_s3 "${6}" "${1}"/backups/"${backup_name}" "${3}"/"${4}"/"${backup_name}"
+  copy_s3 "${6}" "${latest}" "${3}"/"${4}"/latest.txt
+
+  rm "${1}"/backups/"${backup_name}"
+  rm "${latest}"
 }
 
 while getopts ":hr:b:n:p:t:a:" opt; do
