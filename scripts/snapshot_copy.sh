@@ -48,7 +48,7 @@ copy_s3() {
 run() {
   create_backup "${1}" "${2}" "${5}"
 
-  backup_name=$(ls "${1}/backups/*")
+  backup_name=$(ls "${1}/backups/")
   latest=$(mktemp)
   cat << EOF > "${latest}"
 ${backup_name}
