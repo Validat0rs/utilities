@@ -18,6 +18,7 @@ usage() {
   -p      Project.
   -t      Type (e.g.: pruned or archive).
   -a      AWS S3 bucket name.
+  -s      Status URL (e.g.: http://localhost:26657/status).
 EOF
   exit 1
 }
@@ -29,6 +30,7 @@ create_backup() {
   ROOT="${1}" \
   BINARY="${2}" \
   TYPE="${3}" \
+  STATUS_URL="${4}" \
   make cosmos-snapshot
 }
 
@@ -46,7 +48,7 @@ copy_s3() {
 # Run.
 #
 run() {
-  create_backup "${1}" "${2}" "${5}"
+  create_backup "${1}" "${2}" "${5}" "${7}"
 
   backup_name=$(ls "${1}/backups/")
   latest=$(mktemp)
@@ -61,7 +63,7 @@ EOF
   rm "${latest}"
 }
 
-while getopts ":hr:b:n:p:t:a:" opt; do
+while getopts ":hr:b:n:p:t:a:s:" opt; do
   case "${opt}" in
     h)
       usage
@@ -84,6 +86,9 @@ while getopts ":hr:b:n:p:t:a:" opt; do
     a)
       a=${OPTARG}
       ;;
+    s)
+      s=${OPTARG:-"http://localhost:26657/status"}
+      ;;
     *)
       usage
       ;;
@@ -96,4 +101,4 @@ if [ -z "${p}" ] ||
   usage
 fi
 
-run "${r}" "${b}" "${n}" "${p}" "${t}" "${a}"
+run "${r}" "${b}" "${n}" "${p}" "${t}" "${a}" "${s}"

@@ -15,6 +15,7 @@ usage() {
   -r      The root directory for data (e.g.: ~/.gaia).
   -b      Binary (e.g.: gaiad).\
   -t      Type (e.g.: pruned or archive).
+  -s      Status URL (e.g.: http://localhost:26657/status)
 EOF
   exit 1
 }
@@ -23,7 +24,7 @@ EOF
 # Stop cosmovisor
 #
 cosmovisor_stop() {
-  HEIGHT=$("${1}" status | jq ".SyncInfo.latest_block_height" | xargs)
+  HEIGHT=$(curl -s "${1}" | jq ".result.sync_info.latest_block_height" | xargs)
   sudo service cosmovisor stop
 }
 
@@ -38,7 +39,7 @@ check_process() {
 # Backup name.
 #
 backup_name() {
-  BACKUP_NAME="${1}"_"${HEIGHT}"
+  BACKUP_NAME="${1}"_"${2}"_"${HEIGHT}"
 }
 
 #
@@ -63,7 +64,7 @@ cosmovisor_start() {
 #
 run() {
   printf "stopping cosmovisor...\n"
-  cosmovisor_stop "${2}"
+  cosmovisor_stop "${4}"
   sleep 10
 
   printf "checking that cosmovisor has stopped...\n"
@@ -88,7 +89,7 @@ run() {
   cosmovisor_start
 }
 
-while getopts ":hr:b:t:" opt; do
+while getopts ":hr:b:t:s:" opt; do
   case "${opt}" in
     h)
       usage
@@ -102,6 +103,9 @@ while getopts ":hr:b:t:" opt; do
     t)
       t=${OPTARG:-"default"}
       ;;
+    s)
+      s=${OPTARG:-"http://loalhost:26657/status"}
+      ;;
     *)
       usage
       ;;
@@ -109,4 +113,4 @@ while getopts ":hr:b:t:" opt; do
 done
 shift $((OPTIND-1))
 
-run "${r}" "${b}" "${t}"
+run "${r}" "${b}" "${t}" "${s}"
