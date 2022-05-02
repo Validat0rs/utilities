@@ -18,7 +18,7 @@ usage() {
   -p      Project.
   -t      Type (e.g.: pruned or archive).
   -a      AWS S3 bucket name.
-  -s      Status URL (e.g.: http://localhost:26657/status).
+  -s      RPC Status URL (e.g.: http://localhost:26657/status).
 EOF
   exit 1
 }

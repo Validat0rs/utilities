@@ -15,7 +15,7 @@ usage() {
   -r      The root directory for data (e.g.: ~/.gaia).
   -b      Binary (e.g.: gaiad).\
   -t      Type (e.g.: pruned or archive).
-  -s      Status URL (e.g.: http://localhost:26657/status)
+  -s      RPC Status URL (e.g.: http://localhost:26657/status)
 EOF
   exit 1
 }
