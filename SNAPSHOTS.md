@@ -102,3 +102,34 @@ LOCAL_FILE=~/snapshot.tar.lz4 \
 REMOTE_FILE=cosmoshub/snapshot.tar.lz4 \
 make provider-hetzner-copy
 ```
+
+### OVHCloud Storage Server
+
+To sync your newly created snapshot, run
+
+```console
+USERNAME=<username> \
+LOCAL_FILE=<local_file> \
+REMOTE_HOST=<remove_host> \
+REMOTE_FILE=<remote_file> \
+make provider-ovhcloud-copy
+```
+
+where:
+
+|Param| Description                                                |
+|-----|------------------------------------------------------------|
+|`<username>`| The username for accessing the Storage Box (e.g.: `user`). |
+|`<local_file>`| The path to the local file (e.g.: `~/snapshot.tar.lz4`).   |
+|`<remote_host>`| The storage server (e.g.: `storage.validat0.rs`).          |
+|`<remote_file>`| The upload path (e.g.: `cosmoshub/snapshot.tar.lz4`).      |
+
+e.g.:
+
+```console
+USERNAME=user \
+LOCAL_FILE=~/snapshot.tar.lz4 \
+REMOTE_HOST=storage.validat0.rs \
+REMOTE_FILE=cosmoshub/snapshot.tar.lz4 \
+make provider-ovhcloud-copy
+```
