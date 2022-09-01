@@ -14,7 +14,7 @@ provider-hetzner-copy:
 	@./scripts/provider/hetzner/copy.sh -u $(USERNAME) -l $(LOCAL_FILE) -r $(REMOTE_FILE)
 
 provider-ovhcloud-copy:
-	@./scripts/provider/ovhcloud/copy.sh -u $(USERNAME) -l $(LOCAL_FILE) -s $(REMOTE_HOST) -r $(REMOTE_FILE)
+	@./scripts/provider/ovhcloud/copy.sh -l $(LOCAL_DIRECTORY) -s $(REMOTE_HOST) -r $(REMOTE_DIRECTORY)
 
-snapshot-copy:
-	@./scripts/snapshot_copy.sh -r $(ROOT) -b $(BINARY) -n $(NETWORK) -p $(PROJECT) -t $(TYPE) -a $(BUCKET_NAME) -s $(RPC_STATUS_URL)
+snapshot:
+	@./scripts/snapshot.sh -r $(ROOT) -b $(BINARY) -t $(TYPE) -s $(RPC_STATUS_URL)

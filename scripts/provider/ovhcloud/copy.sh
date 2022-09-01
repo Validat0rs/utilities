@@ -12,10 +12,9 @@ usage() {
 
   Options:
   -h      This help output.
-  -u      Username.
-  -l      Local file.
+  -l      Local directory (e.g.: ~/.gaia/backup).
   -s      Remote host.
-  -r      Remote file.
+  -r      Remote directory (e.g.: /var/www/html/gaia).
 EOF
   exit 1
 }
@@ -24,22 +23,14 @@ EOF
 # Run
 #
 run() {
-  if [ ! -f "${2}" ]; then
-    printf "file does not exist!?\n"
-    exit 1
-  fi
-
   printf "copying...\n"
-  scp -P 23 "${2}" "${1}"@"${3}":"${4}"
+  rsync -a "${1}"/ snapshots@"${2}"/"${3}"
 }
 
-while getopts ":hu:l:s:r:" opt; do
+while getopts ":hl:s:r:" opt; do
   case "${opt}" in
     h)
       usage
-      ;;
-    u)
-      u=${OPTARG}
       ;;
     l)
       l=${OPTARG}
@@ -57,11 +48,10 @@ while getopts ":hu:l:s:r:" opt; do
 done
 shift $((OPTIND-1))
 
-if [ -z "${u}" ] ||
-    [ -z "${l}" ] ||
+if [ -z "${l}" ] ||
     [ -z "${s}" ] ||
     [ -z "${r}" ]; then
   usage
 fi
 
-run "${u}" "${l}" "${s}" "${r}"
+run "${l}" "${s}" "${r}"

@@ -48,7 +48,10 @@ backup_name() {
 create_backup() {
   if [ ! -d "${1}/backups" ]; then
     mkdir "${1}/backups" || exit 1
+  else
+    rm -rf "${1}/backups/*"
   fi
+  cp config/addrbook.json "${1}/backups/"
   tar cvf - data/ | lz4 - "${1}/backups/${BACKUP_NAME}".tar.lz4
 }
 
