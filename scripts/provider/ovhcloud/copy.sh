@@ -24,7 +24,7 @@ EOF
 #
 run() {
   printf "copying...\n"
-  rsync -a "${1}"/ snapshots@"${2}"/"${3}"
+  rsync -a "${1}"/ snapshots@"${2}":"${3}"
 }
 
 while getopts ":hl:s:r:" opt; do
