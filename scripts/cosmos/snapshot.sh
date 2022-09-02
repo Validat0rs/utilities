@@ -46,7 +46,7 @@ backup_name() {
 # Create backup.
 #
 create_backup() {
-  rm -rf "${1}/backups/*"
+  rm -rf "${1}/backups"
   mkdir "${1}/backups" || exit 1
 
   cp config/addrbook.json "${1}/backups/"
