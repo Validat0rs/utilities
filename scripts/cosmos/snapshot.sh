@@ -14,7 +14,7 @@ usage() {
   -h      This help output.
   -r      The root directory for data (e.g.: ~/.gaia).
   -b      Binary (e.g.: gaiad).\
-  -t      Type (e.g.: pruned or archive).
+  -l      Backup label.
   -s      RPC Status URL (e.g.: http://localhost:26657/status)
 EOF
   exit 1
@@ -39,7 +39,7 @@ check_process() {
 # Backup name.
 #
 backup_name() {
-  BACKUP_NAME="${1}"_"${2}"_"${HEIGHT}"
+  BACKUP_NAME="${1}"_"${HEIGHT}"
 }
 
 #
@@ -75,7 +75,7 @@ run() {
     exit 1
   fi
 
-  backup_name "${2}" "${3}"
+  backup_name "${3}"
 
   cd "${1}" || exit 1
   if [ ! -d "data" ]; then
@@ -90,7 +90,7 @@ run() {
   cosmovisor_start
 }
 
-while getopts ":hr:b:t:s:" opt; do
+while getopts ":hr:b:l:s:" opt; do
   case "${opt}" in
     h)
       usage
@@ -101,8 +101,8 @@ while getopts ":hr:b:t:s:" opt; do
     b)
       b=${OPTARG:-"gaiad"}
       ;;
-    t)
-      t=${OPTARG:-"default"}
+    l)
+      l=${OPTARG:-"default"}
       ;;
     s)
       s=${OPTARG:-"http://loalhost:26657/status"}
@@ -114,4 +114,4 @@ while getopts ":hr:b:t:s:" opt; do
 done
 shift $((OPTIND-1))
 
-run "${r}" "${b}" "${t}" "${s}"
+run "${r}" "${b}" "${l}" "${s}"

@@ -17,4 +17,4 @@ provider-ovhcloud-copy:
 	@./scripts/provider/ovhcloud/copy.sh -l $(LOCAL_DIRECTORY) -s $(REMOTE_HOST) -r $(REMOTE_DIRECTORY)
 
 snapshot:
-	@./scripts/snapshot.sh -r $(ROOT) -b $(BINARY) -t $(TYPE) -s $(RPC_STATUS_URL)
+	@./scripts/snapshot.sh -r $(ROOT) -b $(BINARY) -l $(BACKUP_LABEL) -s $(RPC_STATUS_URL)

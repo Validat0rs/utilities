@@ -24,24 +24,24 @@ To generate a new snapshot, run:
 ```console
 ROOT=<root_directory> \
 BINARY=<binary> \
-TYPE=<type> \
+BACKUP_LABEL=<backup_label> \
 make cosmos-snapshot
 ```
 
 where:
 
-|Param|Description|
-|-----|-----------|
-|`<root_directory>`|The cosmos root directory (e.g.: `~/.gaiad`).|
-|`<binary>`|The name of the running binary (e.g.: `gaiad`).|
-|`<type>`|A label based on the type of node running (e.g.: `pruned` or `archive`).|
+| Param              | Description                                                                         |
+|--------------------|-------------------------------------------------------------------------------------|
+| `<root_directory>` | The cosmos root directory (e.g.: `~/.gaiad`).                                       |
+| `<binary>`         | The name of the running binary (e.g.: `gaiad`).                                     |
+| `<backup_label>`   | A label that describes the backup (e.g.: `cosmoshub_goleveldb_12345`). |
 
 e.g.:
 
 ```console
 ROOT=~/.gaiad \
 BINARY=gaiad \
-TYPE=pruned \
+BACKUP_LABEL=cosmoshub_goleveldb_12345 \
 make cosmos-snapshot
 ```
 
@@ -130,6 +130,6 @@ e.g.:
 USERNAME=user \
 LOCAL_FILE=~/snapshot.tar.lz4 \
 REMOTE_HOST=storage.validat0.rs \
-REMOTE_FILE=cosmoshub/snapshot.tar.lz4 \
+REMOTE_FILE=/var/www/html/cosmoshub/snapshot.tar.lz4 \
 make provider-ovhcloud-copy
 ```
