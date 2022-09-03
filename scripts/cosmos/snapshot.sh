@@ -13,7 +13,7 @@ usage() {
   Options:
   -h      This help output.
   -r      The root directory for data (e.g.: ~/.gaia).
-  -b      Binary (e.g.: gaiad).\
+  -b      Binary (e.g.: gaiad).
   -l      Backup label.
   -s      RPC Status URL (e.g.: http://localhost:26657/status)
 EOF
