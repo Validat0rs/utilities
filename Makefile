@@ -2,7 +2,7 @@ TYPE?="pruned"
 RPC_STATUS_URL?="http://localhost:26657/status"
 
 cosmos-snapshot:
-	@./scripts/cosmos/snapshot.sh -r $(ROOT) -b $(BINARY) -t $(TYPE) -s $(RPC_STATUS_URL)
+	@./scripts/cosmos/snapshot.sh -r $(ROOT) -b $(BINARY) -l $(BACKUP_LABEL) -s $(RPC_STATUS_URL)
 
 cosmos-testnet:
 	@./scripts/cosmos/testnet.sh -r $(ROOT) -s $(DEFAULT_DENOM) -c $(CHAIN_ID) -m $(MONIKER) -b $(BINARY) -g $(GAS_LIMIT)
